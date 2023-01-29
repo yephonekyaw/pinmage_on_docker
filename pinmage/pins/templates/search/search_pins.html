@@ -1,0 +1,72 @@
+{% extends 'pins/base.html' %}
+{% load static %}
+
+{% block title %}Pins Feed{% endblock %}
+
+{% block content %}
+<!-- preloader container -->
+<div class="preloader-container bg-gray-100">
+    <div class="wrapper">
+        <div class="box-wrap">
+            <div class="box one"></div>
+            <div class="box two"></div>
+            <div class="box three"></div>
+            <div class="box four"></div>
+            <div class="box five"></div>
+            <div class="box six"></div>
+        </div>
+    </div>
+    <span class="preloader-text">Searching and tailoring the feed to your like</span>
+</div>
+
+<!-- pins feed -->
+<!-- literally the same as pins feed (only result is different) -->
+<div id="pins_feed" class="mt-2 columns-2 sm:columns-3 md:columns-4 lg:columns-5 px-4 py-2 gap-4">
+    {% include 'pins/pins_list_extension.html' %}
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        // to close the preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.preloader-container').classList.add('preloader-finish')
+            }, 2000);
+        })
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // make an infinite scroll
+            var page = 1;
+            var empty_page = false;
+            var block_request = false;
+
+            window.addEventListener('scroll', function(event) {
+                var margin = document.body.clientHeight - window.innerHeight - 500;
+                if (window.pageYOffset > margin && !empty_page && !block_request) {
+                    block_request = true;
+                    page += 1;
+
+                    fetch('?pins_only=1&page=' + page)
+                    .then(response => response.text())
+                    .then(html => {
+                        if (html === '') {
+                            empty_page = true;
+                        }
+                        else {
+                            var pins_feed = document.getElementById('pins_feed');
+                            // html is the returned result of pins_list_extension.html
+                            pins_feed.insertAdjacentHTML('beforeEnd', html);
+                            block_request = false;
+                        }
+                    })
+                }
+            })
+
+            // Launch scroll event
+            const scroll_event = new Event('scroll');
+            window.dispatchEvent(scroll_event);
+        })
+    </script>
+{% endblock %}

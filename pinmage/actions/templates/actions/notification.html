@@ -1,0 +1,25 @@
+{% with user=noti.user profile=noti.user.profile %}
+
+<div class="flex px-6 py-4">
+    <a class="flex-none" href="{{ profile.get_absolute_url }}">
+        <img class="w-10 h-10 object-cover rounded-full" src="{{ profile.photo.url }}" alt="">
+    </a>
+    <div class="w-full pl-3">
+        <div class="text-gray-500 text-sm mb-1.5">
+            {% if noti.verb == 'is now following' %}
+                <span class="font-semibold text-gray-900">{{ user.username }}</span> 
+                <span class="text-gray-500 italic">{{ noti.verb }} you.</span>
+            {% elif noti.verb == 'created a new pin' %}
+                <span class="font-semibold text-gray-900">{{ user.username }}</span> 
+                <a href="{{ noti.target.get_absolute_url }}">
+                    <span class="text-gray-500 italic">{{ noti.verb }}</span>
+                </a>
+            {% endif %}
+        </div>
+        <div class="text-xs text-indigo-500">
+            {{ noti.created|timesince }}
+        </div>
+    </div>
+</div>
+
+{% endwith %}

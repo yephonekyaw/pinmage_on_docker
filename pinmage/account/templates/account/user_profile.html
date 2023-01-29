@@ -1,0 +1,300 @@
+{% extends 'pins/base.html' %}
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<!-- hidden section to hold the actual info panel -->
+<div id="profile_box_1"
+    class="flex flex-col items-center justify-center mx-auto bg-gray-100 gap-4 pt-8 pb-4 transition-all duration-300 ease-in-out">
+    <!-- profile image -->
+    <img id="display_avatar" class="flex-none w-32 h-32 rounded-full object-cover" src="{{ user.profile.photo.url }}"
+        alt="">
+    <!-- user name -->
+    <span id="display_fullname" class="text-3xl text-gray-900 font-medium">{{ user.first_name }} {{ user.last_name}}</span>
+    <!-- account -->
+    <span id="display_username" class="text-sm text-gray-500 font-normal">{{ user.username }}</span>
+    {% with total_followers=user.profile.followers.count total_following=user.profile.following.count %}
+    <!-- followers and following -->
+    <div class="flex items-center justify-between gap-6">
+        <span id="follower_count" class="text-md text-gray-900 font-medium">{{ total_followers }} follower{{total_followers|pluralize }}</span>
+        <span class="text-md text-gray-500 font-medium">{{ total_following }} following</span>
+    </div>
+
+    <!-- check whether a user is visiting another user's or their own profile -->
+    {% if visit %}
+    <!-- follow btn or edit profile btn -->
+    <a id="follow_btn" href="#" data-id="{{ user.id }}"
+        data-action="{% if request.user in user.profile.followers.all %}un{% endif %}follow"
+        class="text-white bg-red-500 hover:bg-red-700 font-medium rounded-full text-md px-5 py-2.5 text-center">
+        {% if request.user not in user.profile.followers.all %}
+        Follow
+        {% else %}
+        Unfollow
+        {% endif %}
+    </a>
+    {% else %}
+    <a href="#" id="profile_open_switch">
+        <button type="submit"
+            class="text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-0 font-medium rounded-full text-md px-5 py-2.5 text-center">
+            Edit profile
+        </button>
+    </a>
+    {% endif %}
+    {% endwith %}
+</div>
+
+<!-- hidden edit profile flex container -->
+<div id="profile_box_2"
+    class="relative hidden w-fit h-fit flex flex-col items-center justify-center mx-auto bg-gray-100 transition-all duration-300 ease-in-out">
+    <!-- close btn -->
+    <div id="profile_close_switch" class="absolute right-2 top-2 cursor-pointer">
+        <svg class="w-10 h-10 text-red-500 hover:text-red-700" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+    </div>
+
+    <!-- the info container  -->
+    <div class="flex flex-col items-center justify-center w-fit h-fit pt-8 gap-6">
+        <!-- profile image change -->
+        <div class="flex w-full h-full items-center justify-center">
+            <label for="avatar_image">
+                <img id="avatar_preview" class="flex-none w-32 h-32 rounded-full object-cover cursor-pointer"
+                    src="{{ user.profile.photo.url }}" alt="">
+            </label>
+            <input type="file" id="avatar_image" accept="image/*" class="w-0 h-0">
+        </div>
+
+        <!-- first & last names -->
+        <div class="flex mx-6 items-center justify-center gap-6">
+            <div>
+                <label for="first_name" class="text-sm font-medium text-indigo-500 mb-3">Frist name</label>
+                <input type="text" id="first_name" value="{{ user.first_name }}"
+                    class="border-0 border-b-2 p-0 pb-2 focus:border-indigo-500 focus:ring-0 text-gray-900 text-md font-medium block bg-gray-100"
+                    required>
+            </div>
+            <div>
+                <label for="last_name" class="text-sm font-medium text-indigo-500 mb-3">Last name</label>
+                <input type="text" id="last_name" value="{{ user.last_name }}"
+                    class="border-0 border-b-2 p-0 pb-2 focus:border-indigo-500 focus:ring-0 text-gray-900 text-md font-medium block bg-gray-100"
+                    required>
+            </div>
+        </div>
+
+        <!-- username -->
+        <div class="px-6 w-full">
+            <label for="user_name" class="text-sm font-medium text-indigo-500 mb-3">User name</label>
+            <input type="text" id="username" value="{{ user.username }}"
+                class="border-0 border-b-2 p-0 w-full pb-2 focus:border-indigo-500 focus:ring-0 text-gray-900 text-md font-medium block bg-gray-100"
+                required>
+            <span id="error_message" class="text-md font-medium text-red-500 text-center"></span>    
+        </div>
+
+        <!-- save btn -->
+        <button id="profile_save_btn" type="button"
+            class="text-white w-fit h-fit bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-0 font-medium rounded-full text-md px-5 py-2.5 text-center mr-2 mb-2">
+            Save
+        </button>
+    </div>
+</div>
+
+<!-- created btn and saved btn -->
+<div id="top" class="flex items-center justify-center my-6">
+    <label for="toggle_btn" class="inline-flex items-center cursor-pointer">
+        <input id="toggle_btn" type="checkbox" class="hidden peer">
+        <span
+            class="mr-4 text-gray-500 border-b-0 hover:text-gray-900 peer-checked:text-indigo-500 peer-checked:border-b-2 peer-checked:border-gray-600 font-medium text-md">Saved</span>
+        <span
+            class="ml-4 text-indigo-500 border-b-2 border-gray-600 peer-checked:text-gray-500 peer-checked:border-b-0 peer-checked:hover:text-gray-900 font-medium text-md">Created</span>
+    </label>
+</div>
+
+<!-- Create floating up arrow icon -->
+<a href="#top">
+    <div
+        class="fixed bottom-6 right-6 md:bottom-8 md:right-12 z-30 cursor-grabbing hover:scale-110 md:hover:scale-125 transition-all duration-300 ease-in-out">
+        <div
+            class="w-12 h-12 p-0.5 md:w-16 md:h-16 md:p-2 rounded-full bg-gray-100/50 hover:bg-gray-100/75 drop-shadow-xl flex items-center justify-center">
+            <svg class="w-9 h-9 md:w-14 md:h-14" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke-width="2" stroke="#CC3333">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+            </svg>
+        </div>
+    </div>
+</a>
+
+<!-- created pins feed -->
+<div id="created_pins_feed"
+    class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 px-4 gap-4 transition-all duration-300 ease-in-out">
+    {% include 'pins/pins_list_extension.html' with pins=created_pins %}
+</div>
+
+<!-- saved pins feed -->
+<div id="saved_pins_feed"
+    class="hidden columns-2 sm:columns-3 md:columns-4 lg:columns-5 px-4 gap-4 transition-all duration-300 ease-in-out">
+    {% include 'pins/pins_list_extension.html' with pins=saved_pins %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const csrftoken = Cookies.get('csrftoken');
+        const url = "{% url 'account:user_follow' %}"
+        var options = {
+            method: 'POST',
+            headers: { 'X-CSRFToken': csrftoken },
+            mode: 'same-origin'
+        }
+
+        // to follow/unfollow
+        if (document.getElementById('follow_btn')) {
+            document.getElementById('follow_btn').addEventListener('click', function (event) {
+                event.preventDefault();
+                var follow_btn = this;
+
+                var form_data = new FormData();
+                form_data.append('id', follow_btn.dataset.id);
+                form_data.append('action', follow_btn.dataset.action);
+                options['body'] = form_data;
+
+                fetch(url, options)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data['status'] === 'ok') {
+                            var previous_action = follow_btn.dataset.action;
+                            follow_btn.dataset.action = previous_action === 'follow' ? 'unfollow' : 'follow';
+                            follow_btn.innerHTML = previous_action === 'follow' ? 'Unfollow' : 'Follow';
+
+                            // update follower count
+                            var follower_count = document.getElementById('follower_count');
+                            var total_followers = parseInt(follower_count.innerHTML);
+                            total_followers = previous_action === 'follow' ? total_followers + 1 : total_followers - 1;
+                            follower_count.innerHTML = String(total_followers);
+                            follower_count.innerHTML += total_followers == 1 ? ' follower' : ' follwers';
+                        }
+                    })
+            })
+        }
+
+        // avatar preview
+        const avatar_image = document.getElementById('avatar_image');
+        const avatar_preview = document.getElementById('avatar_preview');
+        avatar_image.addEventListener('change', (event) => {
+            if (event.target.files.length > 0) {
+                var src = URL.createObjectURL(event.target.files[0]);
+                avatar_preview.src = src;
+            }
+        })
+
+        // make an infinite scroll for both saved and created
+        var page_saved = page_created = 1;
+        var empty_page_saved = empty_page_created = false;
+        var block_request_saved = block_request_created = false;
+        var mode = 'created';
+
+        document.getElementById('toggle_btn').addEventListener('change', (event) => {
+            if (event.target.checked) {
+                mode = 'saved';
+                document.getElementById('created_pins_feed').classList.add('hidden');
+                document.getElementById('saved_pins_feed').classList.remove('hidden');
+            } else {
+                mode = 'created';
+                document.getElementById('saved_pins_feed').classList.add('hidden');
+                document.getElementById('created_pins_feed').classList.remove('hidden');
+            }
+        })
+
+        window.addEventListener('scroll', function (event) {
+            if (mode === 'created') {
+                var margin = document.querySelector('#created_pins_feed').clientHeight - window.innerHeight + 100;
+                if (window.pageYOffset > margin && !empty_page_created && !block_request_created) {
+                    block_request_created = true;
+                    page_created += 1;
+
+                    fetch('?pins_only=1&page=' + page_created + '&mode=' + mode)
+                        .then(response => response.text())
+                        .then(html => {
+                            if (html == '') {
+                                empty_page_created = true;
+                            } else {
+                                var pins_feed = document.getElementById('created_pins_feed');
+                                pins_feed.insertAdjacentHTML('beforeEnd', html);
+                                block_request_created = false;
+                            }
+                        })
+                }
+            } else if (mode === 'saved') {
+                var margin = document.querySelector('#saved_pins_feed').clientHeight - window.innerHeight + 100;
+                if (window.pageYOffset > margin && !empty_page_saved && !block_request_saved) {
+                    block_request_saved = true;
+                    page_saved += 1;
+
+                    fetch('?pins_only=1&page=' + page_saved + '&mode=' + mode)
+                        .then(response => response.text())
+                        .then(html => {
+                            if (html == '') {
+                                empty_page_saved = true;
+                            } else {
+                                var pins_feed = document.getElementById('saved_pins_feed');
+                                pins_feed.insertAdjacentHTML('beforeEnd', html);
+                                block_request_saved = false;
+                            }
+                        })
+                }
+            }
+        })
+
+        // Launch scroll event
+        const scroll_event = new Event('scroll');
+        window.dispatchEvent(scroll_event);
+
+        // edit user profile without page refresh
+        const profile_edit_url = "{% url 'account:user_profile_edit' %}";
+        document.getElementById('profile_save_btn').addEventListener('click', function (event) {
+            event.preventDefault();
+            var save_btn = this;
+
+            var new_first_name = document.getElementById('first_name').value;
+            var new_last_name = document.getElementById('last_name').value;
+            var new_username = document.getElementById('username').value;
+            // @ must come before username for search feature
+            new_username = new_username.startsWith('@') ? new_username : '@' + new_username
+            var new_avatar_file = document.getElementById('avatar_image').files[0];
+            var new_avatar_src = document.getElementById('avatar_preview').src;
+
+            var form_data = new FormData();
+            form_data.append('first_name', new_first_name);
+            form_data.append('last_name', new_last_name);
+            form_data.append('username', new_username);
+            form_data.append('photo', new_avatar_file);
+            options['body'] = form_data;
+
+            fetch(profile_edit_url, options)
+                .then(response => response.json())
+                .then(data => {
+                    if (data['status'] === 'ok') {
+                        // toggle display panel and edit panel
+                        document.getElementById('profile_box_1').classList.remove('hidden');
+                        document.getElementById('profile_box_2').classList.add('hidden');
+
+                        // update display panel values
+                        document.getElementById('display_avatar').src = new_avatar_src;
+                        document.getElementById('display_fullname').innerHTML = new_first_name + ' ' + new_last_name;
+                        document.getElementById('display_username').innerHTML = new_username;
+
+                        // make error message disappear
+                        document.getElementById('error_message').innerHTML = '';
+                    }
+                    else if (data['status'] === 'error') {
+                        // display error message
+                        document.getElementById('error_message').innerHTML = data['error_message'];
+                    }
+                })
+
+        })
+    })
+</script>
+{% endblock %}

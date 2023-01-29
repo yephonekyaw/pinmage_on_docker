@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <title>
+        Pinmage
+    </title>
+    <link rel = "icon" href = "{% static 'images/logo.png' %}" type = "image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css">
+</head>
+
+<body class="font-poppins m-0 p-0">
+    <div class="flex justify-start items-center flex-col h-screen">
+        <div class="relative w-full h-full">
+            <video class="w-full h-full object-cover" src="{% static 'videos/social_bk_vd.mp4' %}" loop muted
+                autoplay></video>
+            <!-- transparent background -->
+            <div class="absolute w-full h-full flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-black/50">
+                <!-- hidden flex container -->
+                <div class="flex flex-col items-center justify-center flex-wrap w-full h-full">
+                    <!-- logo, name, login btns -->
+                    <div style="row-gap: 2.5rem;" class="flex flex-col items-center justify-center w-fit h-fit p-2">
+                        <!-- logo & name -->
+                        <div class="flex items-center justify-center gap-6">
+                            <!-- logo -->
+                            <div class="flex items-center justify-center bg-stone-200 p-1 rounded-full outline-none">
+                                <svg class="w-16 h-16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                                    <path fill="#f2696a"
+                                        d="M19.369 21.695a6.505 6.505 0 0 0 .192-7.119l2.499-2.499a3.558 3.558 0 0 0 2.561-.068c.63-.265.746-1.12.263-1.603L21.58 7.103c-.484-.484-1.34-.367-1.605.265a3.56 3.56 0 0 0-.053 2.604l-2.483 2.483a6.505 6.505 0 0 0-7.119.192c-.501.349-.542 1.084-.11 1.516l7.643 7.643c.432.431 1.166.39 1.516-.111z" />
+                                    <path fill="#e2e2e2" d="m6.264 25.75 6.718-8.838 2.121 2.121z" />
+                                    <path fill="#1a4875"
+                                        d="m25.236 10.052-3.303-3.303a1.523 1.523 0 0 0-1.375-.416c-.479.094-.86.401-1.045.841a4.035 4.035 0 0 0-.162 2.661l-1.995 1.995a6.983 6.983 0 0 0-7.323.407 1.455 1.455 0 0 0-.616 1.07c-.04.45.12.891.438 1.209l2.454 2.454-6.444 8.479a.501.501 0 0 0 .398.802.505.505 0 0 0 .303-.102l8.479-6.444 2.454 2.454a1.514 1.514 0 0 0 1.209.438 1.454 1.454 0 0 0 1.07-.616 6.985 6.985 0 0 0 .407-7.323l2.014-2.014a4.026 4.026 0 0 0 2.615-.174c.439-.184.745-.564.839-1.043a1.524 1.524 0 0 0-.417-1.375zM8.881 23.133l4.143-5.451 1.308 1.308-5.451 4.143zm15.546-11.585a3.049 3.049 0 0 1-2.201.058.497.497 0 0 0-.52.118l-2.499 2.499a.5.5 0 0 0-.072.616 5.986 5.986 0 0 1-.177 6.571.456.456 0 0 1-.338.191.516.516 0 0 1-.414-.149l-2.71-2.71c-.015-.02-.022-.044-.04-.062l-2.121-2.121c-.018-.018-.042-.025-.062-.04l-2.71-2.71a.518.518 0 0 1-.149-.414.455.455 0 0 1 .191-.338 5.967 5.967 0 0 1 3.417-1.073c1.09 0 2.184.298 3.153.896a.501.501 0 0 0 .616-.072l2.483-2.482a.5.5 0 0 0 .116-.526 3.046 3.046 0 0 1 .044-2.238.42.42 0 0 1 .316-.247.53.53 0 0 1 .475.142l3.303 3.303a.534.534 0 0 1 .143.475.413.413 0 0 1-.244.313z" />
+                                </svg>
+                            </div>
+                            <h1 class="text-white text-5xl font-semibold">Pinmage</h1>
+                        </div>
+
+                        <!-- login btns -->
+                        <div style="row-gap: 1rem;" class="flex flex-col">
+                            <!-- google -->
+                            <a style="border-radius: 0.5rem;" href="{% url 'social:begin' 'google-oauth2' %}" class="flex items-center justify-start w-auto h-auto bg-white px-6 py-2 gap-4">
+                                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="30px" height="30px">
+                                    <path fill="#fbc02d" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12	s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20	s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+                                    <path fill="#e53935" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039	l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
+                                    <path fill="#4caf50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36	c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
+                                    <path fill="#1565c0" d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
+                                </svg>
+                                <span class="text-black text-sm font-medium text-white">Sign in with Google</span>
+                            </a>
+
+                            <!-- facebook -->
+                            <a style="border-radius: 0.5rem;" href="{% url 'social:begin' 'facebook' %}" class="flex items-center justify-start w-auto h-auto bg-white px-6 py-2 gap-4">
+                                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="30px" height="30px">
+                                    <linearGradient id="Ld6sqrtcxMyckEl6xeDdMa" x1="9.993" x2="40.615" y1="9.993" y2="40.615" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#2aa4f4"/><stop offset="1" stop-color="#007ad9"/>
+                                    </linearGradient>
+                                    <path fill="url(#Ld6sqrtcxMyckEl6xeDdMa)" d="M24,4C12.954,4,4,12.954,4,24s8.954,20,20,20s20-8.954,20-20S35.046,4,24,4z"/>
+                                    <path fill="#fff" d="M26.707,29.301h5.176l0.813-5.258h-5.989v-2.874c0-2.184,0.714-4.121,2.757-4.121h3.283V12.46 c-0.577-0.078-1.797-0.248-4.102-0.248c-4.814,0-7.636,2.542-7.636,8.334v3.498H16.06v5.258h4.948v14.452 C21.988,43.9,22.981,44,24,44c0.921,0,1.82-0.084,2.707-0.204V29.301z"/>
+                                </svg>
+                                <span class="text-black text-sm font-medium text-white">Sign in with Facebook</span>
+                            </a>
+
+                            <!-- twitter not implemented yet -->
+                            <a style="border-radius: 0.5rem;" href="#not_implemented_yet" class="flex items-center justify-start w-auto h-auto bg-white px-6 py-2 gap-4">
+                                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="30px" height="30px">
+                                    <linearGradient id="_osn9zIN2f6RhTsY8WhY4a" x1="10.341" x2="40.798" y1="8.312" y2="38.769" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#2aa4f4"/><stop offset="1" stop-color="#007ad9"/>
+                                    </linearGradient>
+                                    <path fill="url(#_osn9zIN2f6RhTsY8WhY4a)" d="M46.105,11.02c-1.551,0.687-3.219,1.145-4.979,1.362c1.789-1.062,3.166-2.756,3.812-4.758	c-1.674,0.981-3.529,1.702-5.502,2.082C37.86,8.036,35.612,7,33.122,7c-4.783,0-8.661,3.843-8.661,8.582	c0,0.671,0.079,1.324,0.226,1.958c-7.196-0.361-13.579-3.782-17.849-8.974c-0.75,1.269-1.172,2.754-1.172,4.322	c0,2.979,1.525,5.602,3.851,7.147c-1.42-0.043-2.756-0.438-3.926-1.072c0,0.026,0,0.064,0,0.101c0,4.163,2.986,7.63,6.944,8.419	c-0.723,0.198-1.488,0.308-2.276,0.308c-0.559,0-1.104-0.063-1.632-0.158c1.102,3.402,4.299,5.889,8.087,5.963	c-2.964,2.298-6.697,3.674-10.756,3.674c-0.701,0-1.387-0.04-2.065-0.122C7.73,39.577,12.283,41,17.171,41	c15.927,0,24.641-13.079,24.641-24.426c0-0.372-0.012-0.742-0.029-1.108C43.483,14.265,44.948,12.751,46.105,11.02"/>
+                                </svg>
+                                <span class="text-black text-sm font-medium text-white">Sign in with Twitter</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

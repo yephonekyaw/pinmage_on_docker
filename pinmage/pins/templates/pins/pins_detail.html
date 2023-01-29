@@ -1,0 +1,284 @@
+{% extends 'pins/base.html' %}
+{% load static %}
+
+{% block title %}Pin Detail{% endblock %}
+
+{% block content %}
+<!-- whole section after nav bar -->
+<div class="mt-2 w-full max-h-max flex flex-col items-center justify-center bg-gray-100">
+    <!-- flex container -->
+    <div
+        class="flex max-h-max items-center justify-center max-w-md sm:max-w-xl md:max-w-3.5xl lg:max-w-5xl bg-gray-100 drop-shadow-xl rounded-2xl">
+        <!-- image & detail info container -->
+        <div class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-between w-full">
+            <!-- pin(image) -->
+            <img class="w-full md:w-1/2 h-full rounded-t-2xl md:rounded-l-2xl" src="{{ pin.pin.url }}" alt="">
+
+            <!-- detail infos -->
+            <div class="flex flex-1 flex-col justify-start bg-gray-100 px-12 py-8 gap-6">
+                <!-- download & save icons -->
+                <div class="flex items-center justify-center md:justify-end gap-8">
+                    <a href="#no_action_yet"
+                        class="flex items-center justify-center bg-stone-200 hover:scale-125 p-1 rounded-full transition-all duration-300 ease-in-out outline-none">
+                        <svg class="w-13 h-13" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="-4 -3 32 32"
+                            stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                    </a>
+
+                    {% if request.user == pin.user %}
+                        <button disabled class="flex items-center justify-center bg-stone-200 p-1 rounded-full">
+                            <svg class="w-13 h-13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                                <path fill="#f2696a"
+                                    d="M19.369 21.695a6.505 6.505 0 0 0 .192-7.119l2.499-2.499a3.558 3.558 0 0 0 2.561-.068c.63-.265.746-1.12.263-1.603L21.58 7.103c-.484-.484-1.34-.367-1.605.265a3.56 3.56 0 0 0-.053 2.604l-2.483 2.483a6.505 6.505 0 0 0-7.119.192c-.501.349-.542 1.084-.11 1.516l7.643 7.643c.432.431 1.166.39 1.516-.111z" />
+                                <path fill="#e2e2e2" d="m6.264 25.75 6.718-8.838 2.121 2.121z" />
+                                <path fill="#1a4875"
+                                    d="m25.236 10.052-3.303-3.303a1.523 1.523 0 0 0-1.375-.416c-.479.094-.86.401-1.045.841a4.035 4.035 0 0 0-.162 2.661l-1.995 1.995a6.983 6.983 0 0 0-7.323.407 1.455 1.455 0 0 0-.616 1.07c-.04.45.12.891.438 1.209l2.454 2.454-6.444 8.479a.501.501 0 0 0 .398.802.505.505 0 0 0 .303-.102l8.479-6.444 2.454 2.454a1.514 1.514 0 0 0 1.209.438 1.454 1.454 0 0 0 1.07-.616 6.985 6.985 0 0 0 .407-7.323l2.014-2.014a4.026 4.026 0 0 0 2.615-.174c.439-.184.745-.564.839-1.043a1.524 1.524 0 0 0-.417-1.375zM8.881 23.133l4.143-5.451 1.308 1.308-5.451 4.143zm15.546-11.585a3.049 3.049 0 0 1-2.201.058.497.497 0 0 0-.52.118l-2.499 2.499a.5.5 0 0 0-.072.616 5.986 5.986 0 0 1-.177 6.571.456.456 0 0 1-.338.191.516.516 0 0 1-.414-.149l-2.71-2.71c-.015-.02-.022-.044-.04-.062l-2.121-2.121c-.018-.018-.042-.025-.062-.04l-2.71-2.71a.518.518 0 0 1-.149-.414.455.455 0 0 1 .191-.338 5.967 5.967 0 0 1 3.417-1.073c1.09 0 2.184.298 3.153.896a.501.501 0 0 0 .616-.072l2.483-2.482a.5.5 0 0 0 .116-.526 3.046 3.046 0 0 1 .044-2.238.42.42 0 0 1 .316-.247.53.53 0 0 1 .475.142l3.303 3.303a.534.534 0 0 1 .143.475.413.413 0 0 1-.244.313z" />
+                            </svg>
+                        </button>   
+                    {% else %}
+                        {% with users_saved=pin.users_saved.all %}
+                            <a id="pin_save_btn" href="#" data-id="{{ pin.id }}"
+                                data-action="{% if request.user in users_saved %}un{% endif %}save"
+                                class="flex items-center justify-center bg-stone-200 hover:scale-125 p-1 rounded-full transition-all duration-300 ease-in-out outline-none">
+                                
+                                {% if not request.user in users_saved %}
+                                    <!-- save icon -->
+                                    <svg class="w-13 h-13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                                        <path fill="#f2696a"
+                                            d="M19.369 21.695a6.505 6.505 0 0 0 .192-7.119l2.499-2.499a3.558 3.558 0 0 0 2.561-.068c.63-.265.746-1.12.263-1.603L21.58 7.103c-.484-.484-1.34-.367-1.605.265a3.56 3.56 0 0 0-.053 2.604l-2.483 2.483a6.505 6.505 0 0 0-7.119.192c-.501.349-.542 1.084-.11 1.516l7.643 7.643c.432.431 1.166.39 1.516-.111z" />
+                                        <path fill="#e2e2e2" d="m6.264 25.75 6.718-8.838 2.121 2.121z" />
+                                        <path fill="#1a4875"
+                                            d="m25.236 10.052-3.303-3.303a1.523 1.523 0 0 0-1.375-.416c-.479.094-.86.401-1.045.841a4.035 4.035 0 0 0-.162 2.661l-1.995 1.995a6.983 6.983 0 0 0-7.323.407 1.455 1.455 0 0 0-.616 1.07c-.04.45.12.891.438 1.209l2.454 2.454-6.444 8.479a.501.501 0 0 0 .398.802.505.505 0 0 0 .303-.102l8.479-6.444 2.454 2.454a1.514 1.514 0 0 0 1.209.438 1.454 1.454 0 0 0 1.07-.616 6.985 6.985 0 0 0 .407-7.323l2.014-2.014a4.026 4.026 0 0 0 2.615-.174c.439-.184.745-.564.839-1.043a1.524 1.524 0 0 0-.417-1.375zM8.881 23.133l4.143-5.451 1.308 1.308-5.451 4.143zm15.546-11.585a3.049 3.049 0 0 1-2.201.058.497.497 0 0 0-.52.118l-2.499 2.499a.5.5 0 0 0-.072.616 5.986 5.986 0 0 1-.177 6.571.456.456 0 0 1-.338.191.516.516 0 0 1-.414-.149l-2.71-2.71c-.015-.02-.022-.044-.04-.062l-2.121-2.121c-.018-.018-.042-.025-.062-.04l-2.71-2.71a.518.518 0 0 1-.149-.414.455.455 0 0 1 .191-.338 5.967 5.967 0 0 1 3.417-1.073c1.09 0 2.184.298 3.153.896a.501.501 0 0 0 .616-.072l2.483-2.482a.5.5 0 0 0 .116-.526 3.046 3.046 0 0 1 .044-2.238.42.42 0 0 1 .316-.247.53.53 0 0 1 .475.142l3.303 3.303a.534.534 0 0 1 .143.475.413.413 0 0 1-.244.313z" />
+                                    </svg>
+                                {% else %}
+                                    <!-- already saved (unsave) icon -->
+                                    <svg class="w-13 h-13 p-1" version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" enable-background="new 0 0 48 48">
+                                        <path fill="#F44336" d="M37,43l-13-6l-13,6V9c0-2.2,1.8-4,4-4h18c2.2,0,4,1.8,4,4V43z"/>
+                                    </svg>
+                                {% endif %}
+                            
+                            </a>
+                        {% endwith %}
+                    {% endif %}
+                </div>
+
+                <!-- profile pic, acc name & follow btn -->
+                <div class="flex items-center justify-between">
+                    <!-- profile pic & acc name -->
+                    <div class="flex items-center justify-center gap-2">
+                        <a href="{{ pin.user.profile.get_absolute_url }}">
+                            <img class="w-13 h-13 rounded-full object-cover" src="{{ pin.user.profile.photo.url }}"
+                                alt="">
+                        </a>
+                        <div class="flex flex-col">
+                            {% with total_followers=pin.user.profile.followers.count %}
+                            <a href="{{ pin.user.profile.get_absolute_url }}"><span class="text-gray-500 text-lg font-semibold">{{ pin.user.username}}</span></a>
+                            <span id="follower_count" class="text-indigo-500 text-sm font-normal">{{ total_followers }} follower{{ total_followers|pluralize }}</span>
+                            {% endwith %}
+                        </div>
+                    </div>
+                    <!-- follow btn -->
+                    {% if pin.user == request.user %}
+                        <button disabled type="button" class="flex-none text-white bg-red-500 focus:outline-none focus:ring-0 font-medium rounded-full text-md px-5 py-2.5 text-center">
+                            Follow
+                        </button>
+                    {% else %}
+                        <a id="follow_btn" href="#" data-id="{{ pin.user.id }}"
+                            data-action="{% if request.user in pin.user.profile.followers.all %}un{% endif %}follow"
+                            class="flex-none text-white bg-red-500 hover:bg-red-700 font-medium rounded-full text-md px-5 py-2.5 text-center">
+                                {% if request.user not in pin.user.profile.followers.all %}
+                                    Follow
+                                {% else %}
+                                    Unfollow
+                                {% endif %}
+                        </a>
+                    {% endif %}
+                </div>
+
+                <!-- title -->
+                <div class="flex items-center">
+                    <span class="text-4xl text-gray-900 font-semibold w-full">{{ pin.title }}</span>
+                </div>
+
+                <!-- comments -->
+                <div class="flex flex-col">
+                    <span class="text-lg text-gray-900 font-medium my-3">Comments</span>
+                    <div
+                        class="w-full h-56 bg-neutral-300 rounded-2xl border-2 overflow-y-auto scroll-smooth divide-y-2">
+
+                        {% for comment in comments %}
+                            {% with profile=comment.user.profile %}
+                            <!-- comment box -->
+                            <div class="flex items-start px-4 py-4 gap-3">
+                                <!-- profile -->
+                                <a class="flex-none" href="{{ profile.get_absolute_url }}">
+                                    <img class="w-8 h-8 rounded-full object-cover" src="{{ profile.photo.url }}"
+                                        alt="">
+                                </a>
+                                <!-- name and comment -->
+                                <div class="flex flex-col justify-center">
+                                    <a href="{{ profile.get_absolute_url }}">
+                                        <span class="font-medium">{{ profile.user.username }}</span>
+                                    </a>
+                                    <span class="text-sm text-indigo-500">{{ comment.body }}</span>
+                                    <span class="text-sm text-gray-500">{{ comment.created|timesince }}</span>
+                                </div>
+                            </div>
+                            {% endwith %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                <!-- comment add btn -->
+                <form action="{% url 'pins:pins_comment' %}" method="post">
+                    <div class="flex items-center justify-between gap-8">
+                        <input name="pin_id" type="hidden" value="{{ pin.id }}">
+                        <textarea name="pin_comment" maxlength="100"
+                            class="flex-1 px-0 text-md text-gray-500 bg-gray-100 font-medium resize-none border-0 border-b-2 focus:border-indigo-500 focus:ring-0"
+                            rows="1" placeholder="Add a comment"></textarea>
+                        <button type="submit"
+                            class="text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-0 font-medium rounded-full text-md px-5 py-2.5 text-center">
+                            Post
+                        </button>
+                    </div>
+                    {% csrf_token %}
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- more like this text -->
+<div class="flex items-center justify-center w-full h-auto my-6">
+    <span class="text-2xl text-gray-900 font-semibold">Similar pins</span>
+</div>
+
+<!-- pins feed -->
+<div class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 px-4 gap-4">
+    {% include 'pins/pins_list_extension.html' %}
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            autosize(document.querySelectorAll('textarea'));
+
+            const csrftoken = Cookies.get('csrftoken');
+            
+            // to make save/ unsave action
+            const pin_save_url = "{% url 'pins:pins_save' %}"
+            var options = {
+                method: 'POST',
+                headers: {'X-CSRFToken': csrftoken},
+                mode: 'same-origin',
+            }
+
+            // for main pin
+            document.getElementById('pin_save_btn').addEventListener('click', function(event) {
+                event.preventDefault();
+                
+                // save_btn is 'pin_save_btn' <a> node
+                var save_btn = this;
+
+                var form_data = new FormData();
+                form_data.append('id', save_btn.dataset.id);
+                form_data.append('action', save_btn.dataset.action);
+                options['body'] = form_data;
+
+                // sent HTTP request
+                // this fetch() will automatically update backend without refresh
+                fetch(pin_save_url, options)
+                .then(response => response.json())
+                .then(data => {
+                    if (data['status'] == 'ok') {
+                        var previous_action = save_btn.dataset.action;
+                        const save_pin = `
+                                <svg class="w-13 h-13" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                                    <path fill="#f2696a"
+                                        d="M19.369 21.695a6.505 6.505 0 0 0 .192-7.119l2.499-2.499a3.558 3.558 0 0 0 2.561-.068c.63-.265.746-1.12.263-1.603L21.58 7.103c-.484-.484-1.34-.367-1.605.265a3.56 3.56 0 0 0-.053 2.604l-2.483 2.483a6.505 6.505 0 0 0-7.119.192c-.501.349-.542 1.084-.11 1.516l7.643 7.643c.432.431 1.166.39 1.516-.111z" />
+                                    <path fill="#e2e2e2" d="m6.264 25.75 6.718-8.838 2.121 2.121z" />
+                                    <path fill="#1a4875"
+                                        d="m25.236 10.052-3.303-3.303a1.523 1.523 0 0 0-1.375-.416c-.479.094-.86.401-1.045.841a4.035 4.035 0 0 0-.162 2.661l-1.995 1.995a6.983 6.983 0 0 0-7.323.407 1.455 1.455 0 0 0-.616 1.07c-.04.45.12.891.438 1.209l2.454 2.454-6.444 8.479a.501.501 0 0 0 .398.802.505.505 0 0 0 .303-.102l8.479-6.444 2.454 2.454a1.514 1.514 0 0 0 1.209.438 1.454 1.454 0 0 0 1.07-.616 6.985 6.985 0 0 0 .407-7.323l2.014-2.014a4.026 4.026 0 0 0 2.615-.174c.439-.184.745-.564.839-1.043a1.524 1.524 0 0 0-.417-1.375zM8.881 23.133l4.143-5.451 1.308 1.308-5.451 4.143zm15.546-11.585a3.049 3.049 0 0 1-2.201.058.497.497 0 0 0-.52.118l-2.499 2.499a.5.5 0 0 0-.072.616 5.986 5.986 0 0 1-.177 6.571.456.456 0 0 1-.338.191.516.516 0 0 1-.414-.149l-2.71-2.71c-.015-.02-.022-.044-.04-.062l-2.121-2.121c-.018-.018-.042-.025-.062-.04l-2.71-2.71a.518.518 0 0 1-.149-.414.455.455 0 0 1 .191-.338 5.967 5.967 0 0 1 3.417-1.073c1.09 0 2.184.298 3.153.896a.501.501 0 0 0 .616-.072l2.483-2.482a.5.5 0 0 0 .116-.526 3.046 3.046 0 0 1 .044-2.238.42.42 0 0 1 .316-.247.53.53 0 0 1 .475.142l3.303 3.303a.534.534 0 0 1 .143.475.413.413 0 0 1-.244.313z" />
+                                </svg>
+                        `;
+                        const unsave_pin = `
+                                <svg class="w-13 h-13 p-1" version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" enable-background="new 0 0 48 48">
+                                    <path fill="#F44336" d="M37,43l-13-6l-13,6V9c0-2.2,1.8-4,4-4h18c2.2,0,4,1.8,4,4V43z"/>
+                                </svg>
+                        `;
+                        // toggle button action and icon
+                        save_btn.dataset.action = previous_action === 'save' ? 'unsave' : 'save';
+                        save_btn.innerHTML = previous_action === 'save' ? unsave_pin : save_pin;
+                        
+                    }
+                })
+            })
+
+            // to follow user
+            const follow_user_url = "{% url 'account:user_follow' %}"
+            document.getElementById('follow_btn'). addEventListener('click', function(event) {
+                event.preventDefault();
+                var follow_btn = this;
+
+                var form_data = new FormData();
+                form_data.append('id', follow_btn.dataset.id);
+                form_data.append('action', follow_btn.dataset.action);
+                options['body'] = form_data;
+
+                fetch(follow_user_url, options)
+                .then(response => response.json())
+                .then(data => {
+                    if (data['status'] === 'ok') {
+                        var previous_action = follow_btn.dataset.action;
+                        follow_btn.dataset.action = previous_action === 'follow' ? 'unfollow' : 'follow';
+                        follow_btn.innerHTML = previous_action === 'follow' ? 'Unfollow' : 'Follow';
+                        
+                        // update follower count
+                        var follower_count = document.getElementById('follower_count');
+                        var total_followers = parseInt(follower_count.innerHTML);
+                        total_followers = previous_action === 'follow' ? total_followers + 1 : total_followers - 1;
+                        follower_count.innerHTML = String(total_followers);
+                        follower_count.innerHTML += total_followers == 1 ? ' follower' : ' follwers';
+                    }
+                })
+            })
+
+            // make an infinite scroll
+            var page = 1;
+            var empty_page = false;
+            var block_request = false;
+
+            window.addEventListener('scroll', function(event) {
+                var margin = document.body.clientHeight - window.innerHeight - 500;
+                if (window.pageYOffset > margin && !empty_page && !block_request) {
+                    block_request = true;
+                    page += 1;
+
+                    fetch('detail/?pins_only=1&page=' + page)
+                    .then(response => response.text())
+                    .then(html => {
+                        if (html === '') {
+                            empty_page = true;
+                        }
+                        else {
+                            var pins_feed = document.getElementById('pins_feed');
+                            // html is the returned result of pins_list_extension.html
+                            pins_feed.insertAdjacentHTML('beforeEnd', html);
+                            block_request = false;
+                        }
+                    })
+                }
+            })
+
+            // Launch scroll event
+            const scroll_event = new Event('scroll');
+            window.dispatchEvent(scroll_event);
+        })
+    </script>
+{% endblock %}
+
