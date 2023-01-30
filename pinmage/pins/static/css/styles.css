@@ -1,3 +1,12 @@
+/*
+! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
+*/
+
+/*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
 *,
 ::before,
 ::after {
@@ -970,6 +979,14 @@ select {
   height: 1.5rem;
 }
 
+.h-16 {
+  height: 4rem;
+}
+
+.h-14 {
+  height: 3.5rem;
+}
+
 .h-80 {
   height: 20rem;
 }
@@ -986,18 +1003,17 @@ select {
   height: auto;
 }
 
-.h-16 {
-  height: 4rem;
-}
-
 .max-h-max {
   max-height: -moz-max-content;
   max-height: max-content;
 }
 
-.min-h-fit {
-  min-height: -moz-fit-content;
-  min-height: fit-content;
+.max-h-full {
+  max-height: 100%;
+}
+
+.min-h-screen {
+  min-height: 100vh;
 }
 
 .w-32 {
@@ -1045,8 +1061,12 @@ select {
   width: 1.5rem;
 }
 
-.w-md {
-  width: 448px;
+.w-16 {
+  width: 4rem;
+}
+
+.w-14 {
+  width: 3.5rem;
 }
 
 .w-64 {
@@ -1055,10 +1075,6 @@ select {
 
 .w-13 {
   width: 3.2rem;
-}
-
-.w-16 {
-  width: 4rem;
 }
 
 .w-auto {
@@ -1165,10 +1181,6 @@ select {
 
 .gap-3 {
   gap: 0.75rem;
-}
-
-.gap-16 {
-  gap: 4rem;
 }
 
 .gap-y-12 {
@@ -1644,6 +1656,8 @@ select {
 
 .autocomplete-suggestions {
   position: absolute;
+  min-width: -moz-max-content;
+  min-width: max-content;
   background-color: #FFFFFF;
   border-radius: 1rem;
   display: flex;
@@ -1707,6 +1721,9 @@ select {
 
 .preloader-text {
   position: relative;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  text-align: center;
   font-size: medium;
   font-weight: 520;
   font-style: italic;
@@ -2101,6 +2118,12 @@ select {
 .preloader-finish {
   opacity: 0;
   pointer-events: none;
+}
+
+@media (min-width: 430px) {
+  .create\:responsive {
+    width: 448px;
+  }
 }
 
 .hover\:scale-110:hover {

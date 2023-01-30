@@ -12,7 +12,7 @@
         <!-- image & detail info container -->
         <div class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-between w-full">
             <!-- pin(image) -->
-            <img class="w-full md:w-1/2 h-full rounded-t-2xl md:rounded-l-2xl" src="{{ pin.pin.url }}" alt="">
+            <img class="md:w-1/2 h-full rounded-t-2xl md:rounded-l-2xl" src="{{ pin.pin.url }}" alt="">
 
             <!-- detail infos -->
             <div class="flex flex-1 flex-col justify-start bg-gray-100 px-12 py-8 gap-6">
@@ -68,7 +68,7 @@
                 <div class="flex items-center justify-between">
                     <!-- profile pic & acc name -->
                     <div class="flex items-center justify-center gap-2">
-                        <a href="{{ pin.user.profile.get_absolute_url }}">
+                        <a class="flex-none" href="{{ pin.user.profile.get_absolute_url }}">
                             <img class="w-13 h-13 rounded-full object-cover" src="{{ pin.user.profile.photo.url }}"
                                 alt="">
                         </a>

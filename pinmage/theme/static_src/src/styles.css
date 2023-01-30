@@ -6,6 +6,7 @@
 /* to style autocomplete suggestion items */
 .autocomplete-suggestions {
     position: absolute;
+    min-width: max-content;
     background-color: #FFFFFF;
     border-radius: 1rem;
     display: flex;
@@ -38,7 +39,6 @@
     background-color: #f5f5ef;
 }
 
-
 /* to style preloader */
 :root {
     --w-size: 3rem;
@@ -67,6 +67,9 @@
 
 .preloader-text {
     position: relative;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    text-align: center;
     font-size: medium;
     font-weight: 520;
     font-style: italic;
@@ -418,4 +421,10 @@
 .preloader-finish {
     opacity: 0;
     pointer-events: none;
+}
+
+@media (min-width: 430px) {
+    .create\:responsive {
+        width: 448px;
+    }
 }

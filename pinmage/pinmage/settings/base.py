@@ -13,6 +13,12 @@ STATIC_ROOT = '/vol/p_web/static/'
 MEDIA_URL = '/static/media/'
 MEDIA_ROOT = '/vol/p_web/media/'
 
+# TAILWIND_APP_NAME = 'theme'
+# NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
+# INTERNAL_IPS = [
+#     "127.0.0.1",
+# ]
+
 SOCIAL_AUTH_FACEBOOK_KEY = '695800412183433'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'e8f31e0734bbf84161f8edbce8e40bb7'
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']

@@ -1,24 +1,23 @@
 {% extends 'pins/base.html' %}
 {% load static %}
-{% load thumbnail %}
 
 {% block title %}Creat Pins{% endblock %}
 
 {% block content %}
 <!-- whole section -->
-<div class="w-full min-h-fit max-h-max bg-neutral-300 py-12">
+<div class="w-full min-h-screen max-h-full bg-neutral-300 py-12">
     {% if error_message %}
         <div class="text-center">
             <span class="text-md font-medium text-red-500">{{ error_message }}</span>
         </div>
     {% endif %}  
     <!-- flex container -->
-    <div class="flex items-center justify-center w-md md:w-3.5xl max-h-max mx-auto bg-gray-100 drop-shadow-md rounded-2xl py-14 px-6">
+    <div class="flex items-center justify-center create:responsive md:w-3.5xl max-h-max mx-auto bg-gray-100 drop-shadow-md rounded-2xl py-14 px-6">
         <!-- error message -->  
         <!-- FORM -->
         <form action="" enctype="multipart/form-data" method="post">
             <!-- image & input fields container -->
-            <div class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-between w-md md:w-3.5xl px-6 md:px-10">
+            <div class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-between md:w-3.5xl md:px-10">
                 
                 <!-- image preview -->
                 <div id="pin_preview_box" class="hidden flex flex-none justify-center items-center cursor-pointer max-h-max w-64 md:w-5/12 p-3 md:ml-8">
