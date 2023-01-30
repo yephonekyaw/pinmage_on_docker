@@ -10,6 +10,7 @@ urlpatterns = [
     path("account/", include("account.urls", namespace="account")),
     path("social-auth/", include('social_django.urls', namespace='social')),
     path("admin/", admin.site.urls),
+    # path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 if settings.DEBUG:
