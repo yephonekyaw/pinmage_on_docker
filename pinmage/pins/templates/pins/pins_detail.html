@@ -10,9 +10,9 @@
     <div
         class="flex max-h-max items-center justify-center max-w-md sm:max-w-xl md:max-w-3.5xl lg:max-w-5xl bg-gray-100 drop-shadow-xl rounded-2xl">
         <!-- image & detail info container -->
-        <div class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-between w-full">
+        <div class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-between w-full p-4">
             <!-- pin(image) -->
-            <img class="md:w-1/2 h-full rounded-t-2xl md:rounded-l-2xl" src="{{ pin.pin.url }}" alt="">
+            <img class="w-screen h-fit md:w-1/2 md:h-full rounded-t-2xl md:rounded-l-2xl" src="{{ pin.pin.url }}" alt="">
 
             <!-- detail infos -->
             <div class="flex flex-1 flex-col justify-start bg-gray-100 px-12 py-8 gap-6">
@@ -65,7 +65,7 @@
                 </div>
 
                 <!-- profile pic, acc name & follow btn -->
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between gap-4">
                     <!-- profile pic & acc name -->
                     <div class="flex items-center justify-center gap-2">
                         <a class="flex-none" href="{{ pin.user.profile.get_absolute_url }}">

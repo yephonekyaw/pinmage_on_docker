@@ -1073,6 +1073,10 @@ select {
   width: 16rem;
 }
 
+.w-screen {
+  width: 100vw;
+}
+
 .w-13 {
   width: 3.2rem;
 }
@@ -1358,6 +1362,10 @@ select {
 
 .p-2 {
   padding: 0.5rem;
+}
+
+.p-4 {
+  padding: 1rem;
 }
 
 .p-1 {
@@ -2267,6 +2275,10 @@ select {
 
   .md\:h-96 {
     height: 24rem;
+  }
+
+  .md\:h-full {
+    height: 100%;
   }
 
   .md\:w-16 {
