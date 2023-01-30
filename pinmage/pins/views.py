@@ -57,7 +57,7 @@ def pins_feed(request):
 
     # to a new user who has no followers, following, created or saved pins
     # we have to show all pins
-    if not pins:
+    if not pins or len(pins) < 100:
         pins = Pin.objects.all()
 
     paginator = Paginator(pins, 20)

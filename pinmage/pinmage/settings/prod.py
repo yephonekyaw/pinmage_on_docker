@@ -3,7 +3,7 @@ from .base import *
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = True
+DEBUG = False
 
 ADMINS = [
     ('Silly Boy', 'sillyboy.undercover@gmail.com'),
