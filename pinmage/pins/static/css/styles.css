@@ -1656,8 +1656,7 @@ select {
 
 .autocomplete-suggestions {
   position: absolute;
-  min-width: -moz-max-content;
-  min-width: max-content;
+  min-width: fit-content;
   background-color: #FFFFFF;
   border-radius: 1rem;
   display: flex;
@@ -1679,8 +1678,7 @@ select {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  -moz-column-gap: 1.25rem;
-       column-gap: 1.25rem;
+  column-gap: 1.25rem;
   padding-left: 1.75rem;
   padding-right: 1.75rem;
   padding-top: 1rem;
