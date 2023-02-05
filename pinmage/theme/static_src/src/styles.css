@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* to style pin detail info section */
+.detail-info {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: start;
+    color: inherit;
+    min-width: fit-content;
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+}
+
+@media (min-width:872px) {
+    .detail-info {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        justify-content: start;
+        color: inherit;
+        min-width: fit-content;
+        padding: 2rem 3rem;
+        gap: 1.5rem;
+    }
+}
 
 /* to style autocomplete suggestion items */
 .autocomplete-suggestions {

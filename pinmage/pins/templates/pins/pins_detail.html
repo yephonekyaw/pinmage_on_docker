@@ -3,6 +3,38 @@
 
 {% block title %}Pin Detail{% endblock %}
 
+{% block style %}
+    <style>
+        /* to style pin detail info section */
+
+        .detail-info {
+            display: flex;
+            flex-grow: 1;
+            flex-direction: column;
+            justify-content: start;
+            color: inherit;
+            min-width: -moz-fit-content;
+            min-width: fit-content;
+            padding: 2rem 1rem;
+            gap: 1.5rem;
+        }
+
+        @media (min-width:872px) {
+            .detail-info {
+                display: flex;
+                flex-grow: 1;
+                flex-direction: column;
+                justify-content: start;
+                color: inherit;
+                min-width: -moz-fit-content;
+                min-width: fit-content;
+                padding: 2rem 3rem;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 <!-- whole section after nav bar -->
 <div class="mt-2 w-full max-h-max flex flex-col items-center justify-center bg-gray-100">
@@ -10,12 +42,12 @@
     <div
         class="flex max-h-max items-center justify-center max-w-md sm:max-w-xl md:max-w-3.5xl lg:max-w-5xl bg-gray-100 drop-shadow-xl rounded-2xl">
         <!-- image & detail info container -->
-        <div class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-between w-full p-4">
+        <div class="flex flex-col items-center justify-center md:flex-row md:items-start md:justify-between w-full md:p-4">
             <!-- pin(image) -->
             <img class="w-screen h-fit md:w-1/2 md:h-full rounded-t-2xl md:rounded-l-2xl" src="{{ pin.pin.url }}" alt="">
 
             <!-- detail infos -->
-            <div class="flex flex-1 flex-col justify-start bg-gray-100 px-12 py-8 gap-6">
+            <div class="detail-info">
                 <!-- download & save icons -->
                 <div class="flex items-center justify-center md:justify-end gap-8">
                     <a href="#no_action_yet"
