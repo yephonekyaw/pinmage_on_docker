@@ -8,7 +8,7 @@ from django.db import models
 # and Contact, to combine them
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    photo = models.ImageField(upload_to='users/%Y/%m/%d', default='default_profile.png')
+    photo = models.ImageField(upload_to='users/%Y/%m/%d', default='default_profile.png', max_length=500)
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='followers', blank=True)
     following = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='followings', blank=True)
 
