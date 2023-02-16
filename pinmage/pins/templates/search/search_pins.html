@@ -3,6 +3,15 @@
 
 {% block title %}Pins Feed{% endblock %}
 
+{% block style %}
+    <style>
+        /* to make pin feed invisible until it is fully loaded */
+        #pins_feed {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 <!-- preloader container -->
 <div class="preloader-container bg-gray-100">
@@ -31,7 +40,8 @@
         // to close the preloader
         window.addEventListener('load', () => {
             setTimeout(() => {
-                document.querySelector('.preloader-container').classList.add('preloader-finish')
+                document.querySelector('.preloader-container').classList.add('preloader-finish');
+                document.querySelector('#pins_feed').style.display = 'block';
             }, 2000);
         })
 
